@@ -16,15 +16,16 @@ let domSelect = (function() {
 // gameState module -> Stores information about the current game state.
 let gameState = (function() {
 
-    let game_board = ["","","","","","","","",""];
+    let game_board = Array(9).fill("");
 
     function resetBoard() {
-        game_board = ["","","","","","","","",""];
+        for(let i = 0; i <= 8; i++) {
+            game_board[i] = "";
+        }
     }
 
     function addMove(move, marker) {
         game_board[move] = marker;
-        console.log(game_board);
     }
 
     return {
@@ -82,17 +83,14 @@ let singleGameFlow = (function() {
     
     // Add gameState array contents to display, add "click" event listener for each square.
     function fillBoard() {
-        if (!gameOver) {
-            console.log("test...")
-            let i = 0;
-            togglePlayerTurn();
-            domSelect.startBtn.disabled = true;
-            domSelect.game_squares.forEach(square => {
-                square.textContent = gameState.game_board[i];
-                square.addEventListener("click", listener, true);
-                i++;
-            });
-        }
+        let i = 0;
+        togglePlayerTurn();
+        domSelect.startBtn.disabled = true;
+        domSelect.game_squares.forEach(square => {
+            square.textContent = gameState.game_board[i];
+            square.addEventListener("click", listener, true);
+            i++;
+        });
     }
 
     // EventListener helper function.
@@ -131,10 +129,22 @@ let singleGameFlow = (function() {
             if (gameOver) {
                 domSelect.game_container.classList.add("game_over");
                 square.removeEventListener("click", listener, true);
+                domSelect.startBtn.disabled = false;
+                domSelect.startBtn.addEventListener("click", reset);
             }
 
             if (!gameOver) togglePlayerTurn();
         }
+    }
+
+    // Reset game board for new game.
+    function reset() {
+        gameState.resetBoard();
+        console.log(gameState.game_board);
+        isX = false;
+        gameOver = false;
+        domSelect.game_container.classList.remove("game_over");
+        fillBoard();
     }
 
     // Toggle player turn and change information text above the board.
