@@ -17,6 +17,10 @@ body {
     text-align: center;
 }
 
+.game_info {
+    text-align: center;
+}
+
 /* Game board styling */
 .game_container {
     display: inline-grid;
@@ -28,10 +32,15 @@ body {
     height: 500px;
 }
 
+.game_container.game_over{
+    pointer-events: none;
+}
+
 .game_square {
     background-color: white;
     text-align: center;
 }
+
 
 /* Control buttons styling */
 .control_buttons {
@@ -44,6 +53,7 @@ body {
     background-color: #89cff0;
 }
 
-.control_buttons button:hover {
+.control_buttons button:hover:not([disabled]) {
     background-color: #669fb2;
 }
+
