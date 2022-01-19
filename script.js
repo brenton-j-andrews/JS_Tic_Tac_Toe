@@ -122,13 +122,14 @@ let singleGameFlow = (function() {
 
             // Check for a drawn game.
             if (winningConditions.isTie()) {
+                console.log("am i here?");
+                gameOver = true;
                 domSelect.info_text.innerText  = "It is a tie! \nPress Start to play again!";
             }
 
             // If game won, remove square eventListeners and return to programDriver function.
             if (gameOver) {
                 domSelect.game_container.classList.add("game_over");
-                square.removeEventListener("click", listener, true);
                 domSelect.startBtn.disabled = false;
                 domSelect.startBtn.addEventListener("click", reset);
             }
